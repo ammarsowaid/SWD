@@ -1,0 +1,29 @@
+<c-row [ngSwitch]="type">
+    <c-col *ngSwitchCase="'WC-CRD-A-BAR'" [xs]="12" [lg]="6">
+        <c-widget-stat-e
+                [title]="data.title"
+                [value]="data.value"
+                class="mb-4"
+        >
+            <c-chart [data]="dataBarChart"
+                     [options]="barOptions"
+                     class="mx-auto"
+                     height="40"
+                     width="80"></c-chart>
+        </c-widget-stat-e>
+    </c-col>
+    <c-col *ngSwitchCase="'WC-CRD-A-LINE'" [xs]="12" [lg]="6">
+        <c-widget-stat-e
+                [title]="data.title"
+                [value]="data.value"
+                class="mb-4"
+        >
+            <c-chart [data]="dataLineChart"
+                     [options]="lineOptions"
+                     type="line"
+                     class="mx-auto"
+                     height="40"
+                     width="80"></c-chart>
+        </c-widget-stat-e>
+    </c-col>
+</c-row>

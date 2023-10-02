@@ -1,0 +1,50 @@
+:host {
+  .legend {
+    small {
+      font-size: x-small;
+    }
+  }
+}
+.creditCard {
+
+  background-color: #fcfcfc;
+  border-bottom-width:3px;
+  border-bottom-color: #2eb75c;
+  border-radius: 18px;
+
+
+
+}
+.debitCard {
+
+  background-color: #fcfcfc;
+  border-bottom-width:3px;
+  border-bottom-color: #e45353;
+  border-radius: 18px;
+
+
+}
+.totalCard {
+
+  background-color: #fcfcfc;
+  border-bottom-width:3px;
+  border-bottom-color: #303c54;
+  border-radius: 18px;
+
+
+
+}
+.rounded-end {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+
+}
+.rounded-card{
+  border-radius: 18px;
+
+}
+.rounded-start {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+
+}

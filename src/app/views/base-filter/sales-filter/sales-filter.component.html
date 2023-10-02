@@ -1,0 +1,594 @@
+<c-modal id="confirmModal"
+         [size]="'xl'"
+         [visible]="modalVisible"
+         (visibleChange)="handleModalVisible($event)">
+  <form cForm
+        (ngSubmit)="filterEvent()"
+        [formGroup]="filterDataForm" novalidate
+  >
+    <c-modal-header>
+      <h6 cModalTitle>{{'filter-sales-rep'|translate}}</h6>
+      <button (click)="toggleModalVisible()" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+      <c-row class="gx-5" >
+        <c-col >
+          <c-row class="mt-2">
+            <c-col [sm]="8">
+              <label cLabel for="itmGrp">{{'itmGrp'|translate}}</label>
+              <c-multi-select
+                      (searchValueChange)="searchValue$.next($event)"
+                      [options]="(options$ | async) ?? []"
+                      [search]="searchFn"
+                      id="itmGrp"
+                      formControlName="itmGrp"
+                      [itemMinWidth]="333"
+                      multiple
+                      virtualScroller
+                      [visibleItems]="8"
+                      [loading]="loading$ | async"
+              />
+
+            </c-col >
+            <c-col class="align-self-end" >
+              <c-button-group  class="w-100">
+                <input class="btn-check"
+                       formControlName="itmGrpTyp"
+                       id="radio1-grp2"
+                       type="radio"
+                       value="row"/>
+                <label (click)="setRadioValue('itmGrpTyp','row')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="radio1-grp2"
+                       variant="outline">
+                  {{'row'|translate}}
+                </label>
+
+                <input class="btn-check"
+                       formControlName="itmGrpTyp"
+                       id="radio2-grp2"
+                       type="radio"
+                       value="column"/>
+                <label (click)="setRadioValue('itmGrpTyp','column')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="radio2-grp2"
+                       variant="outline">
+
+                  {{'column'|translate}}
+                </label>
+              </c-button-group>
+
+            </c-col>
+          </c-row>
+          <c-row class="mt-2">
+            <c-col [sm]="5">
+              <label cLabel for="itmProp">{{'itmProp'|translate}}</label>
+              <c-multi-select
+                      (searchValueChange)="searchValue$.next($event)"
+                      [options]="(options$ | async) ?? []"
+                      [search]="searchFn"
+                      id="itmProp"
+                      formControlName="itmProp"
+                      [itemMinWidth]="333"
+                      multiple
+                      virtualScroller
+                      [visibleItems]="8"
+                      [loading]="loading$ | async"
+              />
+            </c-col>
+            <c-col [sm]="3" >
+
+              <label cLabel for="itmPropVal">{{'itmPropVal'|translate}}</label>
+              <select
+                      formControlName="itmPropVal"
+                      cSelect id="itmPropVal">
+                <option disabled>Choose...</option>
+                <option>...</option>
+              </select>
+            </c-col >
+            <c-col class="align-self-end" >
+              <c-button-group  class="w-100"
+              >
+                <input class="btn-check"
+                       formControlName="itmPropTyp"
+                       id="itmPropRow"
+                       type="radio"
+                       value="Row"/>
+                <label (click)="setRadioValue('itmPropTyp','row')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="itmPropRow"
+                       variant="outline">
+                  {{'row'|translate}}
+                </label>
+                <input class="btn-check"
+                       formControlName="itmPropTyp"
+                       id="itmPropCol"
+                       type="radio"
+                       value="column"/>
+                <label (click)="setRadioValue('itmPropTyp','column')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="itmPropCol"
+                       variant="outline">
+
+                  {{'column'|translate}}
+                </label>
+              </c-button-group>
+
+            </c-col>
+          </c-row>
+          <c-row class="mt-2">
+            <c-col [sm]="8">
+              <label cLabel for="itm">{{'itm'|translate}}</label>
+              <c-multi-select
+                      (searchValueChange)="searchValue$.next($event)"
+                      [options]="(options$ | async) ?? []"
+                      [search]="searchFn"
+                      id="itm"
+                      formControlName="itm"
+                      [itemMinWidth]="333"
+                      multiple
+                      virtualScroller
+                      [visibleItems]="8"
+                      [loading]="loading$ | async"
+              />
+            </c-col>
+
+            <c-col class="align-self-end" >
+              <c-button-group  class="w-100"
+              >
+                <input class="btn-check"
+                       formControlName="itmTyp"
+                       id="itmRow"
+                       type="radio"
+                       value="Row"/>
+                <label (click)="setRadioValue('itmTyp','row')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="itmRow"
+                       variant="outline">
+                  {{'row'|translate}}
+                </label>
+                <input class="btn-check"
+                       formControlName="itmTyp"
+                       id="itmCol"
+                       type="radio"
+                       value="column"/>
+                <label (click)="setRadioValue('itmTyp','column')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="itmCol"
+                       variant="outline">
+
+                  {{'column'|translate}}
+                </label>
+              </c-button-group>
+
+            </c-col>
+          </c-row>
+          <c-row class="mt-2">
+            <c-col >
+              <label cLabel for="curr">{{'curr'|translate}}</label>
+              <c-multi-select
+                      (searchValueChange)="searchValue$.next($event)"
+                      [options]="(options$ | async) ?? []"
+                      [search]="searchFn"
+                      id="curr"
+                      formControlName="curr"
+                      [itemMinWidth]="333"
+                      multiple
+                      virtualScroller
+                      [visibleItems]="8"
+                      [loading]="loading$ | async"
+              />
+            </c-col>
+            <c-col  class="align-self-end">
+
+
+              <c-input-group class="mt-3">
+                <input aria-label="Text input with checkbox"
+                       class="border-secondary"
+                       disabled value="sysCurr" cBgColor="white"
+                       cFormControl/>
+                <span cInputGroupText class="border-secondary" cBgColor="light">
+      <c-form-check switch
+                    sizing="lg">
+            <input cFormCheckInput id="sysCurr"
+                   formControlName="sysCurr"
+                   type="checkbox"/>
+          </c-form-check>
+  </span>
+
+              </c-input-group>
+
+            </c-col>
+
+            <c-col class="align-self-end">
+              <c-button-group  class="w-100"
+              >
+                <input class="btn-check"
+                       formControlName="currTyp"
+                       id="currRow"
+                       type="radio"
+                       value="row"/>
+                <label (click)="setRadioValue('currTyp','row')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="currRow"
+                       variant="outline">
+                  {{'row'|translate}}
+                </label>
+                <input class="btn-check"
+                       formControlName="currTyp"
+                       id="currCol"
+                       type="radio"
+                       value="column"/>
+                <label (click)="setRadioValue('currTyp','column')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="currCol"
+                       variant="outline">
+
+                  {{'column'|translate}}
+                </label>
+              </c-button-group>
+
+            </c-col>
+          </c-row>
+          <c-row class="mt-2">
+            <c-col [sm]="8">
+              <label cLabel for="dlgt">{{'dlgt'|translate}}</label>
+              <c-multi-select
+                      (searchValueChange)="searchValue$.next($event)"
+                      [options]="(options$ | async) ?? []"
+                      [search]="searchFn"
+                      id="dlgt"
+                      formControlName="dlgt"
+                      [itemMinWidth]="333"
+                      multiple
+                      virtualScroller
+                      [visibleItems]="8"
+                      [loading]="loading$ | async"
+              />
+            </c-col>
+
+            <c-col class="align-self-end ">
+              <c-button-group  class="w-100"
+              >
+                <input class="btn-check"
+                       formControlName="dlgtTyp"
+                       id="dlgtRow"
+                       type="radio"
+                       value="Row"/>
+                <label (click)="setRadioValue('dlgtTyp','row')"
+                       cButton
+                       cFormCheckLabel
+                       for="dlgtRow"
+                       variant="outline">
+                  {{'row'|translate}}
+                </label>
+                <input class="btn-check"
+                       formControlName="dlgtTyp"
+                       id="dlgtCol"
+                       type="radio"
+                       value="column"/>
+                <label (click)="setRadioValue('dlgtTyp','column')"
+                       cButton
+                       cFormCheckLabel
+                       for="dlgtCol"
+                       variant="outline">
+
+                  {{'column'|translate}}
+                </label>
+              </c-button-group>
+
+            </c-col>
+          </c-row>
+          <c-row class="mt-2">
+            <c-col [sm]="8">
+              <label cLabel for="atv">{{'atv'|translate}}</label>
+              <c-multi-select
+                      (searchValueChange)="searchValue$.next($event)"
+                      [options]="(options$ | async) ?? []"
+                      [search]="searchFn"
+                      id="atv"
+                      formControlName="atv"
+                      [itemMinWidth]="333"
+                      multiple
+                      virtualScroller
+                      [visibleItems]="8"
+                      [loading]="loading$ | async"
+              />
+            </c-col>
+
+            <c-col class="align-self-end">
+              <c-button-group  class="w-100"
+              >
+                <input class="btn-check"
+                       formControlName="atvTyp"
+                       id="atvRow"
+                       type="radio"
+                       value="Row"/>
+                <label (click)="setRadioValue('atvTyp','row')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="atvRow"
+                       variant="outline">
+                  {{'row'|translate}}
+                </label>
+                <input class="btn-check"
+                       formControlName="atvTyp"
+                       id="atvCol"
+                       type="radio"
+                       value="column"/>
+                <label (click)="setRadioValue('atvTyp','column')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="dlgtCol"
+                       variant="outline">
+
+                  {{'column'|translate}}
+                </label>
+              </c-button-group>
+
+            </c-col>
+          </c-row>
+
+        </c-col>
+        <c-col >
+          <c-row class="mt-2">
+            <c-col [sm]="8" >
+              <label cLabel for="date">{{'date'|translate}}</label>
+              <c-date-range-picker id="date" [startDate]="startDate" [endDate]="endDate">
+              </c-date-range-picker>
+            </c-col>
+            <c-col  class="align-self-end" >
+              <c-input-group class="mt-4">
+                <input aria-label="Text input with checkbox"
+                       class="border-secondary"
+                       disabled value="sales-return" cBgColor="white"
+                       cFormControl/>
+                <span cInputGroupText class="border-secondary" cBgColor="light">
+      <c-form-check switch
+                    sizing="lg">
+            <input cFormCheckInput id="sales-return"
+                   formControlName="salesReturn"
+                   type="checkbox"/>
+          </c-form-check>
+  </span>
+
+              </c-input-group>
+            </c-col>
+          </c-row>
+          <c-row class="mt-2">
+            <c-col [sm]="8">
+              <label cLabel for="invTyp">{{'invTyp'|translate}}</label>
+              <select
+                      formControlName="invTyp"
+                      cSelect id="invTyp">
+                <option disabled>Choose...</option>
+                <option>...</option>
+              </select>
+            </c-col>
+
+            <c-col class="align-self-end" >
+              <c-button-group  class="w-100"
+              >
+                <input class="btn-check"
+                       formControlName="invTypTyp"
+                       id="invTypRow"
+                       type="radio"
+                       value="Row"/>
+                <label (click)="setRadioValue('invTypTyp','row')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="invTypRow"
+                       variant="outline">
+                  {{'row'|translate}}
+                </label>
+                <input class="btn-check"
+                       formControlName="invTypTyp"
+                       id="invTypCol"
+                       type="radio"
+                       value="column"/>
+                <label (click)="setRadioValue('invTypTyp','column')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="invTypCol"
+                       variant="outline">
+
+                  {{'column'|translate}}
+                </label>
+              </c-button-group>
+
+            </c-col>
+          </c-row>
+          <c-row class="mt-2">
+            <c-col  [sm]="8">
+              <label cLabel for="costCenter">{{'costCenter'|translate}}</label>
+              <select
+                      formControlName="costCenter"
+                      cSelect id="costCenter">
+                <option disabled>Choose...</option>
+                <option>...</option>
+              </select>
+            </c-col>
+
+            <c-col class="align-self-end" >
+              <c-button-group  class="w-100"
+              >
+                <input class="btn-check"
+                       formControlName="costCenterTyp"
+                       id="costCenterRow"
+                       type="radio"
+                       value="Row"/>
+                <label (click)="setRadioValue('costCenterTyp','row')"
+                       cButton
+                       cFormCheckLabel
+                       for="costCenterRow"
+                       variant="outline">
+                  {{'row'|translate}}
+                </label>
+                <input class="btn-check"
+                       formControlName="costCenterTyp"
+                       id="costCenterCol"
+                       type="radio"
+                       value="col"/>
+                <label (click)="setRadioValue('costCenterTyp','column')"
+                       cButton
+                       cFormCheckLabel
+                       for="costCenterCol"
+                       variant="outline">
+
+                  {{'column'|translate}}
+                </label>
+              </c-button-group>
+
+            </c-col>
+          </c-row>
+          <c-row class="mt-2">
+            <c-col >
+              <label cLabel for="cstGrp">{{'cstGrp'|translate}}</label>
+              <select
+                      formControlName="cstGrp"
+                      cSelect id="cstGrp">
+                <option disabled>Choose...</option>
+                <option>...</option>
+              </select>
+            </c-col>
+            <c-col >
+              <label cLabel for="cstName">{{'cstName'|translate}}</label>
+              <c-multi-select
+                      (searchValueChange)="searchValue$.next($event)"
+                      [options]="(options$ | async) ?? []"
+                      [search]="searchFn"
+                      id="cstName"
+                      formControlName="cstName"
+                      [itemMinWidth]="333"
+                      multiple
+                      virtualScroller
+                      [visibleItems]="8"
+                      [loading]="loading$ | async"
+              />
+            </c-col>
+            <c-col class="align-self-end" >
+              <c-button-group  class="w-100"
+              >
+                <input class="btn-check"
+                       formControlName="cstTyp"
+                       id="cstRow"
+                       type="radio"
+                       value="Row"/>
+                <label (click)="setRadioValue('cstTyp','row')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="cstRow"
+                       variant="outline">
+                  {{'row'|translate}}
+                </label>
+                <input class="btn-check"
+                       formControlName="cstTyp"
+                       id="cstCol"
+                       type="radio"
+                       value="column"/>
+                <label (click)="setRadioValue('cstTyp','column')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="cstCol"
+                       variant="outline">
+
+                  {{'column'|translate}}
+                </label>
+              </c-button-group>
+
+            </c-col>
+          </c-row>
+          <c-row class="mt-2">
+            <c-col [sm]="8">
+              <label cLabel for="prj">{{'prj'|translate}}</label>
+              <c-multi-select
+                      (searchValueChange)="searchValue$.next($event)"
+                      [options]="(options$ | async) ?? []"
+                      [search]="searchFn"
+                      id="prj"
+                      formControlName="prj"
+                      [itemMinWidth]="333"
+                      multiple
+                      virtualScroller
+                      [visibleItems]="8"
+                      [loading]="loading$ | async"
+              />
+            </c-col>
+
+            <c-col class="align-self-end" >
+              <c-button-group  class="w-100"
+              >
+                <input class="btn-check"
+                       formControlName="prjTyp"
+                       id="prjRow"
+                       type="radio"
+                       value="Row"/>
+                <label (click)="setRadioValue('prjTyp','row')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="prjRow"
+                       variant="outline">
+                  {{'row'|translate}}
+                </label>
+                <input class="btn-check"
+                       formControlName="prjTyp"
+                       id="prjCol"
+                       type="radio"
+                       value="column"/>
+                <label (click)="setRadioValue('prjTyp','column')"
+                       cButton
+                       cFormCheckLabel
+
+                       for="prjCol"
+                       variant="outline">
+
+                  {{'column'|translate}}
+                </label>
+              </c-button-group>
+
+            </c-col>
+          </c-row>
+          <c-row class="mt-2">
+
+            <c-col   class="align-self-end ">
+              <button
+                      cLoadingButton class="w-100 mt-4"
+                      [cTextColor]="'white'"
+                      type="submit"
+                      [loading]="loading"
+                      color="primary"
+                      [disabled]="filterDataForm.invalid">{{'search'|translate}}</button>
+
+            </c-col>
+          </c-row>
+        </c-col>
+      </c-row >
+
+
+
+    </c-modal-body>
+  </form>
+</c-modal>

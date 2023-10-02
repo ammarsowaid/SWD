@@ -1,0 +1,115 @@
+<!--<c-header class="mb-4 d-print-none" position="sticky">-->
+<ng-container>
+  <c-container [fluid]="true">
+    <button
+      toggle="visible"
+      cHeaderToggler
+      [cSidebarToggle]="sidebarId"
+      class="ps-1 me-2"
+    >
+      <svg cIcon
+           name="cilMenu"
+           size="lg"
+      ></svg>
+    </button>
+    <c-header-nav class="me-auto me-0 ms-0  ">
+      <c-nav-item>
+        <p class="m-0"> {{myDate | date: 'full'}}  </p>
+      </c-nav-item>
+
+    </c-header-nav>
+
+    <c-header-nav class="me-1 ms-1">
+      <c-nav-item>
+        <a routerLink="./" cNavLink>
+          <svg cIcon name="cilBell" size="lg"></svg>
+        </a>
+      </c-nav-item>
+
+    </c-header-nav>
+    <c-header-nav class="me-0 ms-0">
+      <c-nav-item>
+        <c-button-group [size]="'sm'" [formGroup]="btnRadioLang">
+          <input class="btn-check"
+                 formControlName="selectedLang"
+                 id="rdArLang" type="radio" value="ar"/>
+          <label class="rounded-start" (click)="setRadioValue('ar')" cButton cFormCheckLabel  for="rdArLang"
+                 variant="outline">{{'arabic'|translate}}
+            <svg class="rounded-circle" [cIcon]="icons.cifSa"></svg>
+          </label>
+
+          <input class="btn-check " formControlName="selectedLang" id="rdEnLang"
+                 type="radio" value="en"/>
+          <label class="rounded-end"
+                 (click)="setRadioValue('en')" cButton cFormCheckLabel  for="rdEnLang"
+                 variant="outline">{{'english'|translate}}
+            <svg class="rounded-circle" [cIcon]="icons.cifUs"></svg>
+          </label>
+
+        </c-button-group>
+      </c-nav-item>
+
+    </c-header-nav>
+    <c-header-nav class="ms-3">
+      <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
+    </c-header-nav>
+
+  </c-container>
+  <c-header-divider></c-header-divider>
+  <c-container [fluid]="true">
+    <c-breadcrumb class="m-0 ms-3">
+      <ng-container *ngFor="let item of breadcrumbs; let i = index">
+        <ng-container *ngIf="i < breadcrumbs.length - 1">
+          <c-breadcrumb-item [url]="item.url">{{item.label|translate}}</c-breadcrumb-item>
+        </ng-container>
+        <ng-container *ngIf="i === breadcrumbs.length - 1">
+          <c-breadcrumb-item [active]="true">{{item.label|translate}}</c-breadcrumb-item>
+        </ng-container>
+      </ng-container>
+    </c-breadcrumb>
+  </c-container>
+</ng-container>
+<!--</c-header>-->
+
+<ng-template #userDropdown>
+  <c-dropdown variant="nav-item">
+    <button
+      cButton
+      color=""
+      [caret]="false"
+      cDropdownToggle
+      class="py-0"
+    >
+      <c-avatar
+        cTextColor="primary"
+        shape="rounded-1"
+        size="md"
+        src="./assets/img/avatars/8.jpg"
+        status="info">
+      </c-avatar>
+    </button>
+    <ul cDropdownMenu alignment="start">
+      <li>
+        <h6 cDropdownHeader class="bg-light fw-semibold dropdown-item">{{'account'|translate}}</h6>
+      </li>
+      <li cDropdownItem class="px-1">
+        <svg [cIcon]="icons.cilUser"></svg>
+        {{username}}
+      </li>
+      <li cDropdownItem class="px-1">
+        <svg [cIcon]="icons.cilLocationPin"></svg>
+        {{branch}}
+      </li>
+      <li>
+        <hr cDropdownDivider/>
+      </li>
+      <li cDropdownItem class="px-1">
+        <a (click)="logout()" cDropdownItem class="px-0">
+          <svg [cIcon]="icons.cilAccountLogout"></svg>
+          {{'logout'|translate}}</a>
+      </li>
+      <li></li>
+    </ul>
+  </c-dropdown>
+</ng-template>
+
